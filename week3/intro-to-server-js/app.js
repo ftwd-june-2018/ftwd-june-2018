@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 
 
-app.use(express.static('public'));
+app.use("/", express.static('public'));
 
 //localhost:3000/images/cat.jpg
 //will serve the cat picture and we dont need to include the word
