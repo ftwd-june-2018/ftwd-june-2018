@@ -8,8 +8,14 @@
 <input type="text" name="title">
 <br>
 
+
 <label>Author</label>
-<input type="text" name="author">
+<select name="author" required="true">
+    <option value="null"></option>
+    {{#each allTheAuthors}}
+    <option value="{{this._id}}">{{this.name}} {{this.lastName}}</option>
+    {{/each}}  
+</select>
 <br>
 
 <label>Description</label>

@@ -1,77 +1,70 @@
 const mongoose = require('mongoose');
 const Book = require('../models/book');
+const Author = require('../models/author');
 
 const dbName = 'library-app'
 mongoose.connect(`mongodb://localhost/${dbName}`);
 
+
+const jrr = {_id: new mongoose.Types.ObjectId(), name: "JRR", lastName: "Tolkien", nationality: "British", birthday: '01/03/1892'}
+const george = {_id: new mongoose.Types.ObjectId(), name: "George", lastName: "Orwell", nationality: "British", birthday: '06/25/1903'}
+
+const authors = [jrr, george];
+
+
+
 const books = [
-  {
-    title: "The Hunger Games",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "Suzanne Collins",
-    rating: 10
-  },
-  {
-    title: "Harry Potter",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "J.K. Rowling ",
-    rating: 9
-  },
-  {
-    title: "To Kill a Mockingbird ",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "Harper Lee",
-    rating: 8
-  },
-  {
-    title: "Pride and Prejudice ",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "Jane Austen",
-    rating: 9
-  },
-  {
-    title: "Twilight",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "Stephenie Meyer ",
-    rating: 10
-  },
-  {
-    title: "The Book Thief ",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "Markus Zusak",
-    rating: 7
-  },
-  {
-    title: "The Chronicles of Narnia",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "C.S. Lewis",
-    rating: 8
-  },
+{
+  title: "the hobbit",
+  description: "short people go on a quest",
+  author: jrr._id,
+  rating: 7
+},
+{ 
+  title: "lord of the rings",
+  description: "trees walk around a fight, small people grow big, dead people come back to life, etc.",
+  author: jrr._id,
+  rating: 10
+},
   {
     title: "Animal Farm",
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "George Orwell",
+    author: george._id,
     rating: 9
   },
   {
-    title: "Gone with the Wind ",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "Margaret Mitchell",
-    rating: 10
-  },
-  {
-    title: "The Fault in Our Stars ",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    author: "John Green",
-    rating: 8
+    title: "1984",
+    description: 'dystopian futuristic society where the government controls everything.  Basically Black Mirror.',
+    author: george._id,
+    rating: 5
   }
 ]
 
-Book.create(books)
-.then((result)=>{
-    console.log(`created ${result.length} books`);
-    mongoose.disconnect();
+
+Author.create(authors)
+.then((response)=>{
+
+  console.log(`created ${response.length} authors`);
+
+//book .create method inside the .then for the author.create
+    Book.create(books)
+    .then((result)=>{
+        console.log(`created ${result.length} books`);
+        mongoose.disconnect();
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+
+    //book.create ends here
+
+
+
 })
 .catch((err)=>{
-    console.log(err)
+  console.log('didnt work', err)
 })
+
+
+
+

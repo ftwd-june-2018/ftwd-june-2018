@@ -1,9 +1,11 @@
 const express = require('express');
 const router  = express.Router();
 const Book    = require('../models/book');
+const Author  = require('../models/author');
 
 router.get('/books', (req, res, next) => {
     Book.find()
+    .populate('author')
     .then((listOfBooks)=>{
         res.render('books', {listOfBooks});
     })
@@ -14,7 +16,13 @@ router.get('/books', (req, res, next) => {
 
 
 router.get('/books/new', (req, res, next) =>{
-    res.render('newBook');
+    Author.find()
+    .then((allTheAuthors)=>{
+        res.render('newBook', {allTheAuthors});
+    })
+    .catch((err)=>{
+        next(err);
+    })
 });
 
 
@@ -42,7 +50,16 @@ router.post('/books/create', (req, res, next)=>{
 router.get('/books/:id/edit', (req, res, next)=>{
    Book.findById(req.params.id)
    .then((theBook)=>{
-       res.render('editBook', {theBook})
+
+        Author.find()
+        .then((allTheAuthors)=>{
+        
+
+            res.render('editBook', {theBook: theBook, allTheAuthors: allTheAuthors})
+        })
+        .catch((err)=>{
+            next(err)
+        })
    })
    .catch((err)=>{
        next(err);
@@ -79,6 +96,7 @@ router.post('/books/:id/delete', (req, res, next)=>{
 router.get('/books/:id', (req, res, next) => {
     const id = req.params.id;
     Book.findById(id)
+    .populate('author')
     .then((theBook)=>{    
         res.render('bookDetails',  theBook);
     })
