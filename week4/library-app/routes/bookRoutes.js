@@ -53,8 +53,14 @@ router.get('/books/:id/edit', (req, res, next)=>{
 
         Author.find()
         .then((allTheAuthors)=>{
-        
 
+            allTheAuthors.forEach((author)=>{
+
+                if(author._id.equals(theBook.author)){
+                
+                    author.yes = true;
+                }
+            })        
             res.render('editBook', {theBook: theBook, allTheAuthors: allTheAuthors})
         })
         .catch((err)=>{
@@ -105,6 +111,8 @@ router.get('/books/:id', (req, res, next) => {
     })
 });
 
+// this is what theBook looks like
+// {title: 'animal farm', description: 'lorem ipsum dolor', reviews: [{}, {}, {}]     }
 
 
 

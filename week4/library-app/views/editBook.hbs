@@ -10,11 +10,19 @@
 <br>
 
 <label>Author</label>
-<select name="author" required="true">
-    <option value="null"></option>
+<select name="author">
+
     {{#each allTheAuthors}}
+    {{#if this.yes}}
+    <option value="{{this._id}}" selected="selected">{{this.name}} {{this.lastName}}</option>
+    {{/if}}
+    {{/each}} 
+    {{#each allTheAuthors}}
+    {{#unless this.yes}}
     <option value="{{this._id}}">{{this.name}} {{this.lastName}}</option>
+    {{/unless}}
     {{/each}}  
+
 </select>
 <br>
 
