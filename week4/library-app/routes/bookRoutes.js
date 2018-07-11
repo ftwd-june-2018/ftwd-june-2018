@@ -104,7 +104,7 @@ router.get('/books/:id', (req, res, next) => {
     Book.findById(id)
     .populate('author')
     .then((theBook)=>{    
-        res.render('bookDetails',  theBook);
+        res.render('bookDetails',  {theBook: theBook});
     })
     .catch((err)=>{
        next(err); 

@@ -31,6 +31,29 @@ reviewRouter.post('/books/:id/reviews/create', (req, res, next)=>{
 });
 
 
+reviewRouter.post('/books/:id/reviews/delete/:reviewIndex', (req, res, next)=>{
+    const bookID = req.params.id;
+    const reviewIndex = req.params.reviewIndex;
+    Book.findById(bookID)
+    .then((theBookThatImEditing)=>{
+        theBookThatImEditing.reviews.splice(reviewIndex, 1);
+        // theBookThatImEditing.review[reviewIndex] = {reviewer: "me", content: "waaaahhhhh"}
+        //this ^ would be one way to edit a particular review
+        theBookThatImEditing.save()
+            .then((x)=>{
+                res.redirect('/books/'+bookID)
+            })
+            .catch((err)=>{
+                next(err)
+            })
+        })
+    .catch((err)=>{
+        next(err);
+    })
+
+})
+
+
 
 
 

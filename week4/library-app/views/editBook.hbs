@@ -17,6 +17,7 @@
     <option value="{{this._id}}" selected="selected">{{this.name}} {{this.lastName}}</option>
     {{/if}}
     {{/each}} 
+
     {{#each allTheAuthors}}
     {{#unless this.yes}}
     <option value="{{this._id}}">{{this.name}} {{this.lastName}}</option>
