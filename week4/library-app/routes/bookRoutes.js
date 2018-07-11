@@ -3,7 +3,21 @@ const router  = express.Router();
 const Book    = require('../models/book');
 const Author  = require('../models/author');
 
+// router.use((req, res, next) => {
+//     if (req.session.currentUser) {
+//       next();
+//     } else {
+//       res.redirect("/login");
+//     }
+//   });
+// this way make all the routes in the file private (and also any other routes
+// that are connected to app.js AFTER this file)
+
 router.get('/books', (req, res, next) => {
+    // if(!req.session.currentUser){
+    //     res.redirect('/login');
+    //     return;
+    // } // this way you can use to make ONE SINGLE ROUTE private but oyu have to do it in every route that you want to restrict
     Book.find()
     .populate('author')
     .then((listOfBooks)=>{
@@ -24,6 +38,8 @@ router.get('/books/new', (req, res, next) =>{
         next(err);
     })
 });
+
+
 
 
 router.post('/books/create', (req, res, next)=>{
