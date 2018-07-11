@@ -2,6 +2,8 @@ const express      = require('express');
 const userRouter   = express.Router();
 const User         = require('../models/user');
 const bcrypt       = require('bcryptjs');
+const passport     = require('passport');
+
 
 
 userRouter.get('/signup', (req, res, next)=>{
@@ -38,39 +40,22 @@ userRouter.post('/signup', (req, res, next)=>{
 
 
 userRouter.get('/login', (req, res, next)=>{
-    res.render('userViews/loginPage');
+    res.render('userViews/loginPage', { message: req.flash("error") });
 });
 
-userRouter.post('/login', (req, res, next)=>{
-    const theUsername = req.body.theUsername;
-    const thePassword = req.body.thePassword;
-    if (theUsername === "" || thePassword === "") {
-        res.render("userViews/loginPage", {errorMessage: "Indicate a username and a password to sign up"});
-        return;
-      }
-    User.findOne({ "username": theUsername }, (err, user) => {
-        if (err || !user) {
-          res.render("userViews/loginPage", {errorMessage: "Sorry, that username doesn't exist" });
-          return;
-        }
-        if (bcrypt.compareSync(thePassword, user.password)) {
-          // Save the login in the session!
-          req.session.currentUser = user;
-          res.redirect("/");
-        } else {
-          res.render("userViews/loginPage", {errorMessage: "Incorrect password"});
-        }
-    }); // this ends the callback that runs after then User.findOne
-});//this ends the route
+userRouter.post("/login", passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true,
+    passReqToCallback: true
+  }));
 
 
 
 
 userRouter.get("/logout", (req, res, next) => {
-    req.session.destroy((err) => {
-      // cannot access session here
+      req.logout();
       res.redirect("/login");
-    });
   });
 
 
