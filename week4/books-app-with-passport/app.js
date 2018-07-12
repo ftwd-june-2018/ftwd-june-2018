@@ -109,10 +109,13 @@ const authRoutes = require('./routes/authRoutes');
 app.use('', authRoutes);
 
 const blah = require('./routes/bookRoutes');
-app.use('/', ensureLogin.ensureLoggedIn() , blah);
+app.use('/' , blah);
 
 const reviewRoutes = require('./routes/reviewRoutes');
 app.use('/', reviewRoutes);
+
+const authorRoutes = require('./routes/authorRoutes');
+app.use('/', authorRoutes);
 
 
 
