@@ -3,6 +3,10 @@ const router      = express.Router();
 const Book        = require('../models/book');
 const Author      = require('../models/author');
 const ensureLogin = require('connect-ensure-login');
+// const multer = require('multer');
+// const cloudinary = require('cloudinary');
+
+const uploadCloud = require('../config/cloudinary')
 
 // router.use((req, res, next) => {
 //     if (req.session.currentUser) {
@@ -15,6 +19,8 @@ const ensureLogin = require('connect-ensure-login');
 // that are connected to app.js AFTER this file)
 
 router.get('/books', ensureLogin.ensureLoggedIn() ,(req, res, next) => {
+   console.log(process.env.blah);
+   
     // if(!req.session.currentUser){
     //     res.redirect('/login');
     //     return;
@@ -41,14 +47,14 @@ router.get('/books/new', (req, res, next) =>{
 });
 
 
-
-
-router.post('/books/create', (req, res, next)=>{
+router.post('/books/create', uploadCloud.single('photo'), (req, res, next)=>{
+    console.log(req.file);
    const newBook = new Book({
     title: req.body.title,
     author: req.body.author,
     description: req.body.description,
-    rating: req.body.rating
+    rating: req.body.rating,
+    image: req.file.url
    })
 
 //    const newBook = new Book(req.body)

@@ -9,7 +9,8 @@ const bookSchema = new Schema({
   description: String,
   author: {type: Schema.Types.ObjectId, ref: 'Author'},
   rating: Number,
-  reviews: [{reviewer: String, content: String}]
+  reviews: [{reviewer: String, content: String}],
+  image: String
 });
 
 const Book = mongoose.model("Book", bookSchema);

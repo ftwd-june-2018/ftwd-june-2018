@@ -2,7 +2,7 @@
 <h2>Add a New Book to the Library</h2>
 
 
-<form action="/books/create" method="post">
+<form action="/books/create" method="post" enctype="multipart/form-data">
 
 <label>Title</label>
 <input type="text" name="title">
@@ -24,6 +24,10 @@
 
 <label>Rating</label>
 <input type="number" name="rating">
+<br>
+<input type="file" name="photo">
+<br>
+<br>
 <br>
 <button type="submit">Save Book</button>
 
