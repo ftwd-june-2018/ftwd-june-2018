@@ -5,11 +5,13 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { FoodListComponent } from './food-list/food-list.component';
+import { StringifyPipe } from './stringify.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     FoodListComponent,
+    StringifyPipe,
   ],
   imports: [
     BrowserModule,
