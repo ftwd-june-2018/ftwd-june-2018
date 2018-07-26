@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import foods from '../foods';
+import {FoodService} from '../services/food.service';
+
 
 @Component({
   selector: 'app-food-list',
@@ -7,10 +8,11 @@ import foods from '../foods';
   styleUrls: ['./food-list.component.css']
 })
 export class FoodListComponent implements OnInit {
+
+  constructor(public myService: FoodService) { }
+
   theFoodList:Array<any>;
   theSearchTerm:string;
-
-  theNewFoodItem:any = {};
 
   formShowing:boolean = false;
 
@@ -28,22 +30,15 @@ export class FoodListComponent implements OnInit {
   }
 
   searchFoods(){
-    this.theFoodList = foods.filter((oneFood)=>{
+    this.theFoodList = this.myService.serviceFoodList.filter((oneFood)=>{
       return oneFood.name.toLowerCase().match(this.theSearchTerm.toLowerCase());
     });
   }
 
-  addNewFood(){
-    this.theFoodList.unshift(this.theNewFoodItem);
-    this.theNewFoodItem = {};
-    this.toggleForm();
-  }
 
-
-  constructor() { }
 
   ngOnInit() {
-    this.theFoodList = foods;
+    this.theFoodList = this.myService.serviceFoodList;
   }
 
 }
