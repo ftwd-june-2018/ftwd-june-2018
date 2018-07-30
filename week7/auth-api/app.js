@@ -8,6 +8,8 @@ const hbs          = require('hbs');
 const mongoose     = require('mongoose');
 const logger       = require('morgan');
 const path         = require('path');
+const LocalStrategy = require('passport-local').Strategy;
+
 
 const cors         = require('cors');
 
@@ -15,9 +17,9 @@ const session    = require('express-session');
 
 const passport     = require('passport');
 
-const passportSetup = require('./config/passport');
+require('./config/passport');
 
-passportSetup(passport);
+// passportSetup(passport);
 
 
 mongoose.Promise = Promise;
@@ -59,8 +61,7 @@ app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico')));
 app.use(session({
   secret: 'angular auth passport secret shh',
   resave: true,
-  saveUninitialized: true,
-  cookie : { httpOnly: true, maxAge: 2419200000 }
+  saveUninitialized: true
 }));
       
 app.use(passport.initialize());
@@ -70,7 +71,12 @@ app.use(passport.session());
 // default value for title local
 app.locals.title = 'Express - Generated with IronGenerator';
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: ['http://localhost:4200']
+}))
+
+// app.use(cors());
 
 const index = require('./routes/index');
 app.use('/', index);
