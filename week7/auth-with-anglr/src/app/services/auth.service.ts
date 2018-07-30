@@ -8,12 +8,10 @@ import { Observable } from 'rxjs/Rx';
 export class AuthService {
 
 
-  errorMessage:any;
-
   constructor(private http: Http) { }
 
   handleError(e) {
-    // this.errorMessage = e.json().message;
+    console.log(e)
      return Observable.throw(e.json().message);
   }
 
@@ -37,7 +35,7 @@ export class AuthService {
 
   isLoggedIn() {
     return this.http.get(`http://localhost:3000/api/loggedin`)
-      .map(res => res.json())
+      .map(res => {res.json()})
       .catch(this.handleError);
   }
 

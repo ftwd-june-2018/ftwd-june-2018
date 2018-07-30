@@ -15,7 +15,7 @@ export class UserComponent implements OnInit {
 
   loginUser:any={};
 
- theError:any;
+  theError:any;
 
   constructor(private authService: AuthService) { }
 
@@ -24,15 +24,18 @@ export class UserComponent implements OnInit {
     console.log(this.signUpUser);
     this.authService.signup(this.signUpUser)
     .subscribe(
-      res =>{ this.theActualUser = res },
-      error=>{this.theError = error}
+      userObjFromApi =>{ this.successCallback(userObjFromApi) },
+      blahErrorThing=>{this.errorCallback(blahErrorThing)}
     );
   }
 
   tryToLogIn(){
     console.log(this.loginUser);
     this.authService.login(this.loginUser)
-    .subscribe(res =>{ this.theActualUser = res });
+    .subscribe(
+      res =>{ this.successCallback(res) },
+      err =>{this.errorCallback(err)}
+    );
   }
 
   logMeOut(){
@@ -40,8 +43,29 @@ export class UserComponent implements OnInit {
     .subscribe(res =>{ this.theActualUser = {} })
   }
 
+  successCallback(userObject){
+    this.theActualUser = userObject;
+    this.theError = '';
+  }
+
+  errorCallback(errorObject){
+    this.theError = errorObject;
+    this.theActualUser = {username:'', password:''};
+  }
+
+  checkIfLoggedIn(){
+    this.authService.isLoggedIn()
+    .subscribe(
+      (res) =>{
+        this.successCallback(res)
+      },
+      err =>{this.errorCallback(null)}
+    )
+  }
+
 
   ngOnInit() {
+    this.checkIfLoggedIn();
   }
 
 }
