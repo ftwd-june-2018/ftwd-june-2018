@@ -56,9 +56,7 @@ export class UserComponent implements OnInit {
   checkIfLoggedIn(){
     this.authService.isLoggedIn()
     .subscribe(
-      (res) =>{
-        this.successCallback(res)
-      },
+      res =>{this.successCallback(res)},
       err =>{this.errorCallback(null)}
     )
   }
